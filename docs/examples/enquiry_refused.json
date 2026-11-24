@@ -1,0 +1,77 @@
+{
+  "channel": "web",
+  "text": "What is the weather in Paris today?",
+  "intent": "other",
+  "intent_conf": 0.582,
+  "entities": {
+    "timeline": {
+      "label": "immediate",
+      "score": 1.0,
+      "phrase": "today"
+    }
+  },
+  "answer": "I can only help with NimbusDesk products, pricing, demos and support, so I can't help with that. If you have a question about those, just ask, or I can pass your message to our team.",
+  "sources": [],
+  "grounding": 0.0,
+  "refused": true,
+  "needs_human": true,
+  "latency_ms": 1.8,
+  "name": null,
+  "email": null,
+  "phone": null,
+  "company": null,
+  "score": 7,
+  "tier": "cold",
+  "explanation": [
+    {
+      "feature": "Intent strength",
+      "value": 0.08,
+      "weight": 0.25,
+      "points": 2.1,
+      "evidence": "other (confidence 0.58)"
+    },
+    {
+      "feature": "Purchase timeline",
+      "value": 0.25,
+      "weight": 0.2,
+      "points": 5.0,
+      "evidence": "\"today\" -> immediate"
+    },
+    {
+      "feature": "Budget / commercial fit",
+      "value": 0.0,
+      "weight": 0.15,
+      "points": 0.0,
+      "evidence": "no budget stated"
+    },
+    {
+      "feature": "Requirement fit",
+      "value": 0.0,
+      "weight": 0.15,
+      "points": 0.0,
+      "evidence": "no concrete requirement detected"
+    },
+    {
+      "feature": "Urgency",
+      "value": 0.0,
+      "weight": 0.1,
+      "points": 0.0,
+      "evidence": "no urgency language"
+    },
+    {
+      "feature": "Contact provided",
+      "value": 0.0,
+      "weight": 0.1,
+      "points": 0.0,
+      "evidence": "none"
+    },
+    {
+      "feature": "Retrieval-grounding confidence",
+      "value": 0.0,
+      "weight": 0.05,
+      "points": 0.0,
+      "evidence": "0.00"
+    }
+  ],
+  "id": 3
+}

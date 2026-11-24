@@ -1,0 +1,717 @@
+[
+  {
+    "id": 1,
+    "created_at": "2026-11-24T07:00:39+00:00",
+    "channel": "web",
+    "text": "Hi, I'm Priya Nair from Zenith Retail. We have 25 agents, budget $2000/month and want a demo this week. priya@zenith.in",
+    "name": "Priya Nair",
+    "email": "priya@zenith.in",
+    "phone": null,
+    "company": "Zenith Retail",
+    "intent": "demo_request",
+    "intent_conf": 0.538,
+    "entities": {
+      "email": "priya@zenith.in",
+      "name": "Priya Nair",
+      "company": "Zenith Retail",
+      "team_size": 25,
+      "budget": {
+        "amount": 2000.0,
+        "currency": "USD",
+        "text": "budget $2000"
+      },
+      "timeline": {
+        "label": "immediate",
+        "score": 1.0,
+        "phrase": "this week"
+      }
+    },
+    "answer": "Hi Priya, thanks for your interest in NimbusDesk! A 30-minute personalised product demo can be booked with the sales team on weekdays. [1] I've passed your request to our sales team, who will contact you at priya@zenith.in to arrange a demo as soon as possible.",
+    "sources": [
+      {
+        "n": 1,
+        "source": "onboarding.md",
+        "heading": "Product demo"
+      },
+      {
+        "n": 2,
+        "source": "onboarding.md",
+        "heading": "Setup time"
+      },
+      {
+        "n": 3,
+        "source": "pricing.md",
+        "heading": "Plans"
+      }
+    ],
+    "grounding": 0.658,
+    "refused": false,
+    "score": 75,
+    "tier": "hot",
+    "explanation": [
+      {
+        "feature": "Intent strength",
+        "value": 0.82,
+        "weight": 0.25,
+        "points": 20.4,
+        "evidence": "demo_request (confidence 0.54)"
+      },
+      {
+        "feature": "Purchase timeline",
+        "value": 1.0,
+        "weight": 0.2,
+        "points": 20.0,
+        "evidence": "\"this week\" -> immediate"
+      },
+      {
+        "feature": "Budget / commercial fit",
+        "value": 1.0,
+        "weight": 0.15,
+        "points": 15.0,
+        "evidence": "budget $2000 vs ~$375/mo minimum for 25 agents"
+      },
+      {
+        "feature": "Requirement fit",
+        "value": 0.4,
+        "weight": 0.15,
+        "points": 6.0,
+        "evidence": "team size 25, answerable from KB"
+      },
+      {
+        "feature": "Urgency",
+        "value": 0.0,
+        "weight": 0.1,
+        "points": 0.0,
+        "evidence": "no urgency language"
+      },
+      {
+        "feature": "Contact provided",
+        "value": 1.0,
+        "weight": 0.1,
+        "points": 10.0,
+        "evidence": "email/phone given"
+      },
+      {
+        "feature": "Retrieval-grounding confidence",
+        "value": 0.66,
+        "weight": 0.05,
+        "points": 3.3,
+        "evidence": "0.66"
+      }
+    ],
+    "needs_human": true,
+    "status": "new",
+    "latency_ms": 9.9
+  },
+  {
+    "id": 8,
+    "created_at": "2026-11-24T07:00:39+00:00",
+    "channel": "web",
+    "text": "Can we book a demo tomorrow? 70 agents, Salesforce integration. sara@eastgate.co",
+    "name": null,
+    "email": "sara@eastgate.co",
+    "phone": null,
+    "company": null,
+    "intent": "demo_request",
+    "intent_conf": 0.663,
+    "entities": {
+      "email": "sara@eastgate.co",
+      "team_size": 70,
+      "timeline": {
+        "label": "immediate",
+        "score": 1.0,
+        "phrase": "tomorrow"
+      },
+      "products": [
+        "api / integrations"
+      ]
+    },
+    "answer": "Thanks for your interest in NimbusDesk! Integrations can be switched on from the settings page without any coding. [1] NimbusDesk integrates with Slack, Gmail, Outlook, Salesforce, HubSpot, Shopify and WhatsApp Business. [1] I've passed your request to our sales team, who will contact you at sara@eastgate.co to arrange a demo as soon as possible.",
+    "sources": [
+      {
+        "n": 1,
+        "source": "integrations.md",
+        "heading": "Available integrations"
+      },
+      {
+        "n": 2,
+        "source": "onboarding.md",
+        "heading": "Setup time"
+      },
+      {
+        "n": 3,
+        "source": "onboarding.md",
+        "heading": "Migration"
+      }
+    ],
+    "grounding": 0.986,
+    "refused": false,
+    "score": 72,
+    "tier": "hot",
+    "explanation": [
+      {
+        "feature": "Intent strength",
+        "value": 0.87,
+        "weight": 0.25,
+        "points": 21.6,
+        "evidence": "demo_request (confidence 0.66)"
+      },
+      {
+        "feature": "Purchase timeline",
+        "value": 1.0,
+        "weight": 0.2,
+        "points": 20.0,
+        "evidence": "\"tomorrow\" -> immediate"
+      },
+      {
+        "feature": "Budget / commercial fit",
+        "value": 0.0,
+        "weight": 0.15,
+        "points": 0.0,
+        "evidence": "no budget stated"
+      },
+      {
+        "feature": "Requirement fit",
+        "value": 1.0,
+        "weight": 0.15,
+        "points": 15.0,
+        "evidence": "products: api / integrations, team size 70, answerable from KB"
+      },
+      {
+        "feature": "Urgency",
+        "value": 0.0,
+        "weight": 0.1,
+        "points": 0.0,
+        "evidence": "no urgency language"
+      },
+      {
+        "feature": "Contact provided",
+        "value": 1.0,
+        "weight": 0.1,
+        "points": 10.0,
+        "evidence": "email/phone given"
+      },
+      {
+        "feature": "Retrieval-grounding confidence",
+        "value": 0.99,
+        "weight": 0.05,
+        "points": 4.9,
+        "evidence": "0.99"
+      }
+    ],
+    "needs_human": true,
+    "status": "new",
+    "latency_ms": 7.9
+  },
+  {
+    "id": 5,
+    "created_at": "2026-11-24T07:00:39+00:00",
+    "channel": "web",
+    "text": "Please send the contract for Enterprise, 120 seats, sign this month. legal@novacare.org",
+    "name": null,
+    "email": "legal@novacare.org",
+    "phone": null,
+    "company": null,
+    "intent": "purchase",
+    "intent_conf": 0.714,
+    "entities": {
+      "email": "legal@novacare.org",
+      "team_size": 120,
+      "timeline": {
+        "label": "this_month",
+        "score": 0.8,
+        "phrase": "this month"
+      }
+    },
+    "answer": "Great to hear you're ready to move forward! The Enterprise plan has custom pricing and adds single sign-on, a dedicated account manager and a custom service level agreement. [1] Enterprise implementations usually take two to four weeks because of single sign-on and data migration. [2] I've marked this as a priority for our sales team, who will follow up at legal@novacare.org with a quote and the next steps.",
+    "sources": [
+      {
+        "n": 1,
+        "source": "pricing.md",
+        "heading": "Plans"
+      },
+      {
+        "n": 2,
+        "source": "onboarding.md",
+        "heading": "Setup time"
+      },
+      {
+        "n": 3,
+        "source": "security.md",
+        "heading": "Single sign-on and audit logs"
+      }
+    ],
+    "grounding": 0.466,
+    "refused": false,
+    "score": 56,
+    "tier": "hot",
+    "explanation": [
+      {
+        "feature": "Intent strength",
+        "value": 0.89,
+        "weight": 0.25,
+        "points": 22.1,
+        "evidence": "purchase (confidence 0.71)"
+      },
+      {
+        "feature": "Purchase timeline",
+        "value": 0.8,
+        "weight": 0.2,
+        "points": 16.0,
+        "evidence": "\"this month\" -> this_month"
+      },
+      {
+        "feature": "Budget / commercial fit",
+        "value": 0.0,
+        "weight": 0.15,
+        "points": 0.0,
+        "evidence": "no budget stated"
+      },
+      {
+        "feature": "Requirement fit",
+        "value": 0.4,
+        "weight": 0.15,
+        "points": 6.0,
+        "evidence": "team size 120, answerable from KB"
+      },
+      {
+        "feature": "Urgency",
+        "value": 0.0,
+        "weight": 0.1,
+        "points": 0.0,
+        "evidence": "no urgency language"
+      },
+      {
+        "feature": "Contact provided",
+        "value": 1.0,
+        "weight": 0.1,
+        "points": 10.0,
+        "evidence": "email/phone given"
+      },
+      {
+        "feature": "Retrieval-grounding confidence",
+        "value": 0.47,
+        "weight": 0.05,
+        "points": 2.3,
+        "evidence": "0.47"
+      }
+    ],
+    "needs_human": true,
+    "status": "new",
+    "latency_ms": 4.2
+  },
+  {
+    "id": 7,
+    "created_at": "2026-11-24T07:00:39+00:00",
+    "channel": "web",
+    "text": "What does the Growth plan cost per agent?",
+    "name": null,
+    "email": null,
+    "phone": null,
+    "company": null,
+    "intent": "pricing",
+    "intent_conf": 0.789,
+    "entities": {},
+    "answer": "The Growth plan costs $39 per agent per month and adds ticket automation, analytics dashboard and priority support. [1] The Starter plan costs $15 per agent per month and includes the shared inbox and live chat widget. [1] Would you like a tailored quote? Tell us your team size and our sales team will follow up. Could you share your email or phone number so our team can reach you?",
+    "sources": [
+      {
+        "n": 1,
+        "source": "pricing.md",
+        "heading": "Plans"
+      },
+      {
+        "n": 2,
+        "source": "pricing.md",
+        "heading": "Free trial"
+      },
+      {
+        "n": 3,
+        "source": "integrations.md",
+        "heading": "REST API and webhooks"
+      }
+    ],
+    "grounding": 0.936,
+    "refused": false,
+    "score": 30,
+    "tier": "warm",
+    "explanation": [
+      {
+        "feature": "Intent strength",
+        "value": 0.73,
+        "weight": 0.25,
+        "points": 18.3,
+        "evidence": "pricing (confidence 0.79)"
+      },
+      {
+        "feature": "Purchase timeline",
+        "value": 0.2,
+        "weight": 0.2,
+        "points": 4.0,
+        "evidence": "no timeline stated"
+      },
+      {
+        "feature": "Budget / commercial fit",
+        "value": 0.0,
+        "weight": 0.15,
+        "points": 0.0,
+        "evidence": "no budget stated"
+      },
+      {
+        "feature": "Requirement fit",
+        "value": 0.2,
+        "weight": 0.15,
+        "points": 3.0,
+        "evidence": "answerable from KB"
+      },
+      {
+        "feature": "Urgency",
+        "value": 0.0,
+        "weight": 0.1,
+        "points": 0.0,
+        "evidence": "no urgency language"
+      },
+      {
+        "feature": "Contact provided",
+        "value": 0.0,
+        "weight": 0.1,
+        "points": 0.0,
+        "evidence": "none"
+      },
+      {
+        "feature": "Retrieval-grounding confidence",
+        "value": 0.94,
+        "weight": 0.05,
+        "points": 4.7,
+        "evidence": "0.94"
+      }
+    ],
+    "needs_human": false,
+    "status": "new",
+    "latency_ms": 1.9
+  },
+  {
+    "id": 2,
+    "created_at": "2026-11-24T07:00:39+00:00",
+    "channel": "web",
+    "text": "Do you integrate with Salesforce and HubSpot? We might need it later this year.",
+    "name": null,
+    "email": null,
+    "phone": null,
+    "company": "Salesforce",
+    "intent": "product_info",
+    "intent_conf": 0.525,
+    "entities": {
+      "company": "Salesforce",
+      "products": [
+        "api / integrations"
+      ]
+    },
+    "answer": "NimbusDesk integrates with Slack, Gmail, Outlook, Salesforce, HubSpot, Shopify and WhatsApp Business. [1] If you'd like more detail, I can arrange a demo or pass your questions to our team. Could you share your email or phone number so our team can reach you?",
+    "sources": [
+      {
+        "n": 1,
+        "source": "integrations.md",
+        "heading": "Available integrations"
+      },
+      {
+        "n": 2,
+        "source": "integrations.md",
+        "heading": "REST API and webhooks"
+      },
+      {
+        "n": 3,
+        "source": "features.md",
+        "heading": "Ticket automation"
+      }
+    ],
+    "grounding": 0.661,
+    "refused": false,
+    "score": 29,
+    "tier": "warm",
+    "explanation": [
+      {
+        "feature": "Intent strength",
+        "value": 0.41,
+        "weight": 0.25,
+        "points": 10.1,
+        "evidence": "product_info (confidence 0.53)"
+      },
+      {
+        "feature": "Purchase timeline",
+        "value": 0.2,
+        "weight": 0.2,
+        "points": 4.0,
+        "evidence": "no timeline stated"
+      },
+      {
+        "feature": "Budget / commercial fit",
+        "value": 0.0,
+        "weight": 0.15,
+        "points": 0.0,
+        "evidence": "no budget stated"
+      },
+      {
+        "feature": "Requirement fit",
+        "value": 0.8,
+        "weight": 0.15,
+        "points": 12.0,
+        "evidence": "products: api / integrations, answerable from KB"
+      },
+      {
+        "feature": "Urgency",
+        "value": 0.0,
+        "weight": 0.1,
+        "points": 0.0,
+        "evidence": "no urgency language"
+      },
+      {
+        "feature": "Contact provided",
+        "value": 0.0,
+        "weight": 0.1,
+        "points": 0.0,
+        "evidence": "none"
+      },
+      {
+        "feature": "Retrieval-grounding confidence",
+        "value": 0.66,
+        "weight": 0.05,
+        "points": 3.3,
+        "evidence": "0.66"
+      }
+    ],
+    "needs_human": false,
+    "status": "new",
+    "latency_ms": 5.4
+  },
+  {
+    "id": 3,
+    "created_at": "2026-11-24T07:00:39+00:00",
+    "channel": "web",
+    "text": "What is the weather in Paris today?",
+    "name": null,
+    "email": null,
+    "phone": null,
+    "company": null,
+    "intent": "other",
+    "intent_conf": 0.582,
+    "entities": {
+      "timeline": {
+        "label": "immediate",
+        "score": 1.0,
+        "phrase": "today"
+      }
+    },
+    "answer": "I can only help with NimbusDesk products, pricing, demos and support, so I can't help with that. If you have a question about those, just ask, or I can pass your message to our team.",
+    "sources": [],
+    "grounding": 0.0,
+    "refused": true,
+    "score": 7,
+    "tier": "cold",
+    "explanation": [
+      {
+        "feature": "Intent strength",
+        "value": 0.08,
+        "weight": 0.25,
+        "points": 2.1,
+        "evidence": "other (confidence 0.58)"
+      },
+      {
+        "feature": "Purchase timeline",
+        "value": 0.25,
+        "weight": 0.2,
+        "points": 5.0,
+        "evidence": "\"today\" -> immediate"
+      },
+      {
+        "feature": "Budget / commercial fit",
+        "value": 0.0,
+        "weight": 0.15,
+        "points": 0.0,
+        "evidence": "no budget stated"
+      },
+      {
+        "feature": "Requirement fit",
+        "value": 0.0,
+        "weight": 0.15,
+        "points": 0.0,
+        "evidence": "no concrete requirement detected"
+      },
+      {
+        "feature": "Urgency",
+        "value": 0.0,
+        "weight": 0.1,
+        "points": 0.0,
+        "evidence": "no urgency language"
+      },
+      {
+        "feature": "Contact provided",
+        "value": 0.0,
+        "weight": 0.1,
+        "points": 0.0,
+        "evidence": "none"
+      },
+      {
+        "feature": "Retrieval-grounding confidence",
+        "value": 0.0,
+        "weight": 0.05,
+        "points": 0.0,
+        "evidence": "0.00"
+      }
+    ],
+    "needs_human": true,
+    "status": "new",
+    "latency_ms": 1.8
+  },
+  {
+    "id": 4,
+    "created_at": "2026-11-24T07:00:39+00:00",
+    "channel": "web",
+    "text": "I was charged twice this month and I am very unhappy.",
+    "name": null,
+    "email": null,
+    "phone": null,
+    "company": null,
+    "intent": "complaint",
+    "intent_conf": 0.858,
+    "entities": {
+      "timeline": {
+        "label": "this_month",
+        "score": 0.8,
+        "phrase": "this month"
+      }
+    },
+    "answer": "I'm sorry about your experience. I've escalated your message to a member of our team, who will review it and get back to you as a priority.",
+    "sources": [],
+    "grounding": 0.0,
+    "refused": false,
+    "score": 5,
+    "tier": "cold",
+    "explanation": [
+      {
+        "feature": "Intent strength",
+        "value": 0.05,
+        "weight": 0.25,
+        "points": 1.2,
+        "evidence": "complaint (confidence 0.86)"
+      },
+      {
+        "feature": "Purchase timeline",
+        "value": 0.2,
+        "weight": 0.2,
+        "points": 4.0,
+        "evidence": "\"this month\" -> this_month"
+      },
+      {
+        "feature": "Budget / commercial fit",
+        "value": 0.0,
+        "weight": 0.15,
+        "points": 0.0,
+        "evidence": "no budget stated"
+      },
+      {
+        "feature": "Requirement fit",
+        "value": 0.0,
+        "weight": 0.15,
+        "points": 0.0,
+        "evidence": "no concrete requirement detected"
+      },
+      {
+        "feature": "Urgency",
+        "value": 0.0,
+        "weight": 0.1,
+        "points": 0.0,
+        "evidence": "no urgency language"
+      },
+      {
+        "feature": "Contact provided",
+        "value": 0.0,
+        "weight": 0.1,
+        "points": 0.0,
+        "evidence": "none"
+      },
+      {
+        "feature": "Retrieval-grounding confidence",
+        "value": 0.0,
+        "weight": 0.05,
+        "points": 0.0,
+        "evidence": "0.00"
+      }
+    ],
+    "needs_human": true,
+    "status": "new",
+    "latency_ms": 0.9
+  },
+  {
+    "id": 6,
+    "created_at": "2026-11-24T07:00:39+00:00",
+    "channel": "web",
+    "text": "How do I reset my password?",
+    "name": null,
+    "email": null,
+    "phone": null,
+    "company": null,
+    "intent": "support",
+    "intent_conf": 0.79,
+    "entities": {},
+    "answer": "Sorry to hear you're having trouble. I've logged this for our support team, who will follow up.",
+    "sources": [],
+    "grounding": 0.0,
+    "refused": true,
+    "score": 3,
+    "tier": "cold",
+    "explanation": [
+      {
+        "feature": "Intent strength",
+        "value": 0.09,
+        "weight": 0.25,
+        "points": 2.3,
+        "evidence": "support (confidence 0.79)"
+      },
+      {
+        "feature": "Purchase timeline",
+        "value": 0.05,
+        "weight": 0.2,
+        "points": 1.0,
+        "evidence": "no timeline stated"
+      },
+      {
+        "feature": "Budget / commercial fit",
+        "value": 0.0,
+        "weight": 0.15,
+        "points": 0.0,
+        "evidence": "no budget stated"
+      },
+      {
+        "feature": "Requirement fit",
+        "value": 0.0,
+        "weight": 0.15,
+        "points": 0.0,
+        "evidence": "no concrete requirement detected"
+      },
+      {
+        "feature": "Urgency",
+        "value": 0.0,
+        "weight": 0.1,
+        "points": 0.0,
+        "evidence": "no urgency language"
+      },
+      {
+        "feature": "Contact provided",
+        "value": 0.0,
+        "weight": 0.1,
+        "points": 0.0,
+        "evidence": "none"
+      },
+      {
+        "feature": "Retrieval-grounding confidence",
+        "value": 0.0,
+        "weight": 0.05,
+        "points": 0.0,
+        "evidence": "0.00"
+      }
+    ],
+    "needs_human": true,
+    "status": "new",
+    "latency_ms": 1.7
+  }
+]

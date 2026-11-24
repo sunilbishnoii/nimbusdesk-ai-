@@ -1,0 +1,30 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "1. Run the app (opens at http://127.0.0.1:8000)",
+      "type": "debugpy", "request": "launch", "module": "uvicorn",
+      "args": ["app.main:app", "--port", "8000"],
+      "cwd": "${workspaceFolder}",
+      "python": "${workspaceFolder}/.venv/Scripts/python.exe",
+      "console": "integratedTerminal"
+    },
+    {
+      "name": "2. Run tests",
+      "type": "debugpy", "request": "launch", "module": "pytest",
+      "args": ["-q", "tests"],
+      "cwd": "${workspaceFolder}",
+      "python": "${workspaceFolder}/.venv/Scripts/python.exe",
+      "console": "integratedTerminal"
+    },
+    {
+      "name": "3. Run Bitext evaluation",
+      "type": "debugpy", "request": "launch",
+      "program": "${workspaceFolder}/scripts/bitext_eval.py",
+      "args": ["1500"],
+      "cwd": "${workspaceFolder}",
+      "python": "${workspaceFolder}/.venv/Scripts/python.exe",
+      "console": "integratedTerminal"
+    }
+  ]
+}

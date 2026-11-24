@@ -1,0 +1,21 @@
+{
+  "total": 8,
+  "avg_grounding": 0.46337500000000004,
+  "refusal_rate": 0.25,
+  "avg_latency_ms": 4.2125,
+  "human_escalation_rate": 0.75,
+  "by_tier": {
+    "cold": 3,
+    "hot": 3,
+    "warm": 2
+  },
+  "by_intent": {
+    "complaint": 1,
+    "demo_request": 2,
+    "other": 1,
+    "pricing": 1,
+    "product_info": 1,
+    "purchase": 1,
+    "support": 1
+  }
+}

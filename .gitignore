@@ -1,0 +1,24 @@
+# secrets / local
+.env
+.env.*
+!.env.example
+.DS_Store
+
+# python
+.venv/
+backend/.venv/
+__pycache__/
+*/__pycache__/
+*.pyc
+*.db
+.pytest_cache/
+
+# node
+node_modules/
+frontend/node_modules/
+dist/
+frontend/dist/
+
+# dataset (licence: do not redistribute; each person downloads it)
+backend/data/Bitext*.csv
+*.log

@@ -1,0 +1,162 @@
+{
+ "n_raw": 26872,
+ "n_dedup": 23478,
+ "n_train": 18782,
+ "n_test": 4696,
+ "intent": {
+  "B1 keyword rules (auto-derived)": {
+   "accuracy": 0.8003,
+   "macro_f1": 0.7899,
+   "by_flag_acc_n": {
+    "typos": [
+     0.7616,
+     927
+    ],
+    "colloquial": [
+     0.7995,
+     1641
+    ],
+    "offensive": [
+     0.8366,
+     257
+    ],
+    "keyword-only": [
+     0.6549,
+     255
+    ],
+    "negation": [
+     0.8611,
+     72
+    ],
+    "coordinated": [
+     0.8078,
+     562
+    ]
+   }
+  },
+  "B2 TF-IDF word + LogReg": {
+   "accuracy": 0.994,
+   "macro_f1": 0.9927,
+   "by_flag_acc_n": {
+    "typos": [
+     0.9741,
+     927
+    ],
+    "colloquial": [
+     0.9927,
+     1641
+    ],
+    "offensive": [
+     0.9961,
+     257
+    ],
+    "keyword-only": [
+     0.9804,
+     255
+    ],
+    "negation": [
+     1.0,
+     72
+    ],
+    "coordinated": [
+     0.9982,
+     562
+    ]
+   }
+  },
+  "Proposed: word+char TF-IDF + LogReg": {
+   "accuracy": 0.9985,
+   "macro_f1": 0.9984,
+   "by_flag_acc_n": {
+    "typos": [
+     0.9978,
+     927
+    ],
+    "colloquial": [
+     0.9988,
+     1641
+    ],
+    "offensive": [
+     1.0,
+     257
+    ],
+    "keyword-only": [
+     0.9882,
+     255
+    ],
+    "negation": [
+     1.0,
+     72
+    ],
+    "coordinated": [
+     0.9982,
+     562
+    ]
+   }
+  }
+ },
+ "top_confusions": [
+  {
+   "true": "change_order",
+   "pred": "place_order",
+   "n": 2
+  },
+  {
+   "true": "track_order",
+   "pred": "delivery_period",
+   "n": 1
+  },
+  {
+   "true": "registration_problems",
+   "pred": "create_account",
+   "n": 1
+  },
+  {
+   "true": "track_order",
+   "pred": "change_order",
+   "n": 1
+  },
+  {
+   "true": "create_account",
+   "pred": "registration_problems",
+   "n": 1
+  },
+  {
+   "true": "cancel_order",
+   "pred": "check_cancellation_fee",
+   "n": 1
+  }
+ ],
+ "retrieval": {
+  "n_queries": 1500,
+  "n_chunks": 52,
+  "bm25": {
+   "hit1": 0.5433,
+   "hit3": 0.7147,
+   "mrr5": 0.6339,
+   "cat_hit3": 0.8533,
+   "hit3_typos": 0.6656
+  },
+  "dense": {
+   "hit1": 0.5973,
+   "hit3": 0.7767,
+   "mrr5": 0.6879,
+   "cat_hit3": 0.8953,
+   "hit3_typos": 0.7705
+  },
+  "hybrid": {
+   "hit1": 0.5847,
+   "hit3": 0.77,
+   "mrr5": 0.679,
+   "cat_hit3": 0.8993,
+   "hit3_typos": 0.7508
+  },
+  "hybrid_rerank": {
+   "hit1": 0.6067,
+   "hit3": 0.782,
+   "mrr5": 0.6934,
+   "cat_hit3": 0.896,
+   "hit3_typos": 0.7902
+  }
+ }
+}

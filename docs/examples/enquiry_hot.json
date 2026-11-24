@@ -1,0 +1,102 @@
+{
+  "channel": "web",
+  "text": "Hi, I'm Priya Nair from Zenith Retail. We have 25 agents, budget $2000/month and want a demo this week. priya@zenith.in",
+  "intent": "demo_request",
+  "intent_conf": 0.538,
+  "entities": {
+    "email": "priya@zenith.in",
+    "name": "Priya Nair",
+    "company": "Zenith Retail",
+    "team_size": 25,
+    "budget": {
+      "amount": 2000.0,
+      "currency": "USD",
+      "text": "budget $2000"
+    },
+    "timeline": {
+      "label": "immediate",
+      "score": 1.0,
+      "phrase": "this week"
+    }
+  },
+  "answer": "Hi Priya, thanks for your interest in NimbusDesk! A 30-minute personalised product demo can be booked with the sales team on weekdays. [1] I've passed your request to our sales team, who will contact you at priya@zenith.in to arrange a demo as soon as possible.",
+  "sources": [
+    {
+      "n": 1,
+      "source": "onboarding.md",
+      "heading": "Product demo"
+    },
+    {
+      "n": 2,
+      "source": "onboarding.md",
+      "heading": "Setup time"
+    },
+    {
+      "n": 3,
+      "source": "pricing.md",
+      "heading": "Plans"
+    }
+  ],
+  "grounding": 0.658,
+  "refused": false,
+  "needs_human": true,
+  "latency_ms": 9.9,
+  "name": "Priya Nair",
+  "email": "priya@zenith.in",
+  "phone": null,
+  "company": "Zenith Retail",
+  "score": 75,
+  "tier": "hot",
+  "explanation": [
+    {
+      "feature": "Intent strength",
+      "value": 0.82,
+      "weight": 0.25,
+      "points": 20.4,
+      "evidence": "demo_request (confidence 0.54)"
+    },
+    {
+      "feature": "Purchase timeline",
+      "value": 1.0,
+      "weight": 0.2,
+      "points": 20.0,
+      "evidence": "\"this week\" -> immediate"
+    },
+    {
+      "feature": "Budget / commercial fit",
+      "value": 1.0,
+      "weight": 0.15,
+      "points": 15.0,
+      "evidence": "budget $2000 vs ~$375/mo minimum for 25 agents"
+    },
+    {
+      "feature": "Requirement fit",
+      "value": 0.4,
+      "weight": 0.15,
+      "points": 6.0,
+      "evidence": "team size 25, answerable from KB"
+    },
+    {
+      "feature": "Urgency",
+      "value": 0.0,
+      "weight": 0.1,
+      "points": 0.0,
+      "evidence": "no urgency language"
+    },
+    {
+      "feature": "Contact provided",
+      "value": 1.0,
+      "weight": 0.1,
+      "points": 10.0,
+      "evidence": "email/phone given"
+    },
+    {
+      "feature": "Retrieval-grounding confidence",
+      "value": 0.66,
+      "weight": 0.05,
+      "points": 3.3,
+      "evidence": "0.66"
+    }
+  ],
+  "id": 1
+}

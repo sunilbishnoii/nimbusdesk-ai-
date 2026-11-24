@@ -1,0 +1,92 @@
+{
+  "channel": "web",
+  "text": "Do you integrate with Salesforce and HubSpot? We might need it later this year.",
+  "intent": "product_info",
+  "intent_conf": 0.525,
+  "entities": {
+    "company": "Salesforce",
+    "products": [
+      "api / integrations"
+    ]
+  },
+  "answer": "NimbusDesk integrates with Slack, Gmail, Outlook, Salesforce, HubSpot, Shopify and WhatsApp Business. [1] If you'd like more detail, I can arrange a demo or pass your questions to our team. Could you share your email or phone number so our team can reach you?",
+  "sources": [
+    {
+      "n": 1,
+      "source": "integrations.md",
+      "heading": "Available integrations"
+    },
+    {
+      "n": 2,
+      "source": "integrations.md",
+      "heading": "REST API and webhooks"
+    },
+    {
+      "n": 3,
+      "source": "features.md",
+      "heading": "Ticket automation"
+    }
+  ],
+  "grounding": 0.661,
+  "refused": false,
+  "needs_human": false,
+  "latency_ms": 5.4,
+  "name": null,
+  "email": null,
+  "phone": null,
+  "company": "Salesforce",
+  "score": 29,
+  "tier": "warm",
+  "explanation": [
+    {
+      "feature": "Intent strength",
+      "value": 0.41,
+      "weight": 0.25,
+      "points": 10.1,
+      "evidence": "product_info (confidence 0.53)"
+    },
+    {
+      "feature": "Purchase timeline",
+      "value": 0.2,
+      "weight": 0.2,
+      "points": 4.0,
+      "evidence": "no timeline stated"
+    },
+    {
+      "feature": "Budget / commercial fit",
+      "value": 0.0,
+      "weight": 0.15,
+      "points": 0.0,
+      "evidence": "no budget stated"
+    },
+    {
+      "feature": "Requirement fit",
+      "value": 0.8,
+      "weight": 0.15,
+      "points": 12.0,
+      "evidence": "products: api / integrations, answerable from KB"
+    },
+    {
+      "feature": "Urgency",
+      "value": 0.0,
+      "weight": 0.1,
+      "points": 0.0,
+      "evidence": "no urgency language"
+    },
+    {
+      "feature": "Contact provided",
+      "value": 0.0,
+      "weight": 0.1,
+      "points": 0.0,
+      "evidence": "none"
+    },
+    {
+      "feature": "Retrieval-grounding confidence",
+      "value": 0.66,
+      "weight": 0.05,
+      "points": 3.3,
+      "evidence": "0.66"
+    }
+  ],
+  "id": 2
+}

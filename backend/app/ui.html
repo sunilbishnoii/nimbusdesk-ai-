@@ -1,0 +1,27 @@
+<!DOCTYPE html><html><head><meta charset="utf-8"><title>NimbusDesk · Enquiry & Lead Console</title><style>
+body{font-family:system-ui,Segoe UI,Arial;margin:0;background:#0d1228;color:#e8ecff}
+header{padding:18px 28px;background:linear-gradient(90deg,#2b1b73,#06406b);font-size:20px;font-weight:700}
+main{display:grid;grid-template-columns:1fr 1.2fr;gap:18px;padding:18px 28px}
+.card{background:#151c3d;border:1px solid #27306b;border-radius:10px;padding:16px}
+textarea,input{width:100%;box-sizing:border-box;background:#0d1228;color:#fff;border:1px solid #27306b;border-radius:6px;padding:8px;margin-bottom:8px;font:inherit}
+button{background:#7c5cff;color:#fff;border:0;border-radius:6px;padding:9px 18px;font-weight:700;cursor:pointer}
+.tier{display:inline-block;padding:2px 10px;border-radius:12px;font-weight:700;font-size:12px}
+.hot{background:#ff5470}.warm{background:#ffb347;color:#222}.cold{background:#4aa3ff}
+table{width:100%;border-collapse:collapse;font-size:13px}td,th{padding:6px;border-bottom:1px solid #27306b;text-align:left}
+.bar{height:8px;background:#27306b;border-radius:4px;overflow:hidden}.bar i{display:block;height:100%;background:#3ef2a4}
+small{color:#9aa6d8}</style></head><body>
+<header>NimbusDesk · Enquiry &amp; Lead Console <small style="font-weight:400">(demo)</small></header><main>
+<div class="card"><h3>New enquiry</h3>
+<textarea id="t" rows="5" placeholder="e.g. Hi, I'm Rahul from Acme. We have 40 agents, budget $2000/month and want a demo this week. rahul@acme.com"></textarea>
+<button onclick="send()">Submit enquiry</button><div id="out" style="margin-top:14px"></div></div>
+<div class="card"><h3>Lead queue <button onclick="load()" style="padding:3px 10px;font-size:12px">refresh</button></h3><table id="tb"></table></div></main>
+<script>
+const $=id=>document.getElementById(id);
+async function send(){const r=await fetch('/enquiry',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({text:$('t').value})});const d=await r.json();
+$('out').innerHTML=`<p><b>Answer</b> ${d.refused?'<span class="tier hot">refused/escalated</span>':''}<br>${d.answer}</p>
+<p><small>grounding ${d.grounding}</small><div class="bar"><i style="width:${d.grounding*100}%"></i></div></p>
+<p><b>Lead:</b> <span class="tier ${d.tier}">${d.tier.toUpperCase()}</span> score <b>${d.score}</b> · intent <b>${d.intent}</b></p>
+<table>${d.explanation.map(e=>`<tr><td>${e.feature}</td><td>${e.points}</td><td><small>${e.evidence}</small></td></tr>`).join('')}</table>`;load()}
+async function load(){const d=await (await fetch('/leads?limit=15')).json();
+$('tb').innerHTML='<tr><th>#</th><th>Score</th><th>Tier</th><th>Intent</th><th>Contact</th></tr>'+d.map(l=>`<tr><td>${l.id}</td><td>${l.score}</td><td><span class="tier ${l.tier}">${l.tier}</span></td><td>${l.intent}</td><td>${l.email||l.name||'-'}</td></tr>`).join('')}
+load();</script></body></html>

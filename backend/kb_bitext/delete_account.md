@@ -1,0 +1,3 @@
+# Delete Account
+## Delete Account (Account)
+I understand that you're unsure about the steps to take. Don't worry, I'm here to help you with the process. To cancel your account type account, you can log in to your account settings and navigate to the cancellation section. If you're unable to locate the cancellation option, our customer support team is available to assist you further. They can guide you through the process and ensure a smooth cancellation experience. Please let me know if there's anything specific you need assistance with or any further questions you have regarding the cancellation of your account type account.

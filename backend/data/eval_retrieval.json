@@ -1,0 +1,122 @@
+[
+{
+"q": "how much does the growth plan cost",
+"src": "pricing.md",
+"h": "Plans"
+},
+{
+"q": "is there a discount if I pay yearly",
+"src": "pricing.md",
+"h": "Billing and discounts"
+},
+{
+"q": "do you have a free trial",
+"src": "pricing.md",
+"h": "Free trial"
+},
+{
+"q": "can I get my money back",
+"src": "pricing.md",
+"h": "Refunds and cancellation"
+},
+{
+"q": "does it support single sign on",
+"src": "security.md",
+"h": "Single sign-on and audit logs"
+},
+{
+"q": "where is my data stored",
+"src": "security.md",
+"h": "Data residency"
+},
+{
+"q": "is the data encrypted",
+"src": "security.md",
+"h": "Data protection"
+},
+{
+"q": "can it connect to salesforce",
+"src": "integrations.md",
+"h": "Available integrations"
+},
+{
+"q": "what is the api rate limit",
+"src": "integrations.md",
+"h": "REST API and webhooks"
+},
+{
+"q": "how fast is the support response for growth customers",
+"src": "support_policy.md",
+"h": "Support channels and response times"
+},
+{
+"q": "what uptime do you guarantee",
+"src": "support_policy.md",
+"h": "Uptime"
+},
+{
+"q": "how long does setup take",
+"src": "onboarding.md",
+"h": "Setup time"
+},
+{
+"q": "can I import tickets from zendesk",
+"src": "onboarding.md",
+"h": "Migration"
+},
+{
+"q": "can someone show us a demo",
+"src": "onboarding.md",
+"h": "Product demo"
+},
+{
+"q": "can the system automatically route tickets",
+"src": "features.md",
+"h": "Ticket automation"
+},
+{
+"q": "what reports does the analytics dashboard give",
+"src": "features.md",
+"h": "Analytics dashboard"
+},
+{
+"q": "can I cancel whenever I want",
+"src": "pricing.md",
+"h": "Refunds and cancellation"
+},
+{
+"q": "which messaging apps do you plug into",
+"src": "integrations.md",
+"h": "Available integrations"
+},
+{
+"q": "what happens if the service goes down",
+"src": "support_policy.md",
+"h": "Uptime"
+},
+{
+"q": "how quickly will you reply to me on the cheapest plan",
+"src": "support_policy.md",
+"h": "Support channels and response times"
+},
+{
+"q": "will you help move my old helpdesk data over",
+"src": "onboarding.md",
+"h": "Migration"
+},
+{
+"q": "are my customers details safe",
+"src": "security.md",
+"h": "Data protection"
+},
+{
+"q": "does the software write replies for my agents",
+"src": "features.md",
+"h": "AI reply suggestions"
+},
+{
+"q": "what do nonprofits pay",
+"src": "pricing.md",
+"h": "Billing and discounts"
+}
+]

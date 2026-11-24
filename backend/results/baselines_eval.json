@@ -1,0 +1,80 @@
+{
+ "n_queries": 1500,
+ "n_offtopic": 30,
+ "top1_source_accuracy": {
+  "B1 keyword rules -> predefined answer": {
+   "accuracy": 0.7953,
+   "offtopic_refused": 0.0
+  },
+  "B2 TF-IDF classifier -> predefined answer": {
+   "accuracy": 0.9947,
+   "offtopic_refused": 0.0
+  },
+  "B3 basic RAG (dense top-1, no refusal)": {
+   "accuracy": 0.5967,
+   "offtopic_refused": 0.0
+  },
+  "B4 hybrid RAG (no rerank, no refusal)": {
+   "accuracy": 0.5873,
+   "offtopic_refused": 0.0
+  }
+ },
+ "proposed": {
+  "threshold": 0.3,
+  "answered": 0.8193,
+  "top1_accuracy_when_answered": 0.6485,
+  "top1_accuracy_all": 0.604,
+  "offtopic_refused": 0.7333
+ },
+ "proposed_with_intent_prior": {
+  "prior_weight": 0.4,
+  "top1_accuracy_all": 0.8947,
+  "answered": 0.8,
+  "top1_accuracy_when_answered": 0.9183,
+  "offtopic_refused": 0.7333
+ },
+ "sweep": [
+  {
+   "thr": 0.0,
+   "answered": 1.0,
+   "acc_when_answered": 0.604,
+   "offtopic_refused": 0.0
+  },
+  {
+   "thr": 0.1,
+   "answered": 0.98,
+   "acc_when_answered": 0.61,
+   "offtopic_refused": 0.633
+  },
+  {
+   "thr": 0.2,
+   "answered": 0.925,
+   "acc_when_answered": 0.624,
+   "offtopic_refused": 0.667
+  },
+  {
+   "thr": 0.3,
+   "answered": 0.819,
+   "acc_when_answered": 0.648,
+   "offtopic_refused": 0.733
+  },
+  {
+   "thr": 0.4,
+   "answered": 0.685,
+   "acc_when_answered": 0.69,
+   "offtopic_refused": 0.9
+  },
+  {
+   "thr": 0.5,
+   "answered": 0.511,
+   "acc_when_answered": 0.738,
+   "offtopic_refused": 0.967
+  },
+  {
+   "thr": 0.6,
+   "answered": 0.325,
+   "acc_when_answered": 0.799,
+   "offtopic_refused": 1.0
+  }
+ ]
+}

@@ -1,0 +1,3 @@
+# Registration Problems
+## Registration Problems (Account)
+To report the issue, you can reach out to our customer support team either through our website or our dedicated helpline. Our customer support representatives will guide you through the process of reporting the problem and help you find a quick solution. They will ask you for specific details about the issue you encountered during sign-up, so it would be helpful if you can provide as much information as possible. Rest assured, your feedback will help us improve our sign-up process and ensure a smoother experience for all our users. Thank you for bringing this to our attention, and we appreciate your cooperation in resolving this matter.
