@@ -139,7 +139,7 @@ function generateResponse(text, channel) {
 
   // ── EXPLICIT APPOINTMENT / BOOKING (must say appoint/book/schedule clearly) ──
   if (/\b(appoint[a-z]*|book\s+a[n]?\s+appoint|book\s+a\s+slot|book\s+a\s+demo|schedule\s+a[n]?\s+appoint|book\s+me\s+in|carpenter|plumber|electrician|handyman|service\s+visit)\b/i.test(lower)) {
-    const sName = service || (/carpenter/i.test(lower) ? "Carpenter Service" : /plumber/i.test(lower) ? "Plumber Service" : /electrician/i.test(lower) ? "Electrician Service" : "Specialist Consultation");
+    const sName = service || "General Consultation";
     const answer = `${greeting}I've found available slots for your **${sName}** request! 📅\n\nHere are 3 available time slots — tap to confirm:\n\n👉 Pick a preferred slot below to instantly confirm, or tell me a time that works better for you!`;
     const score = (email || phone) ? 88 : (name ? 75 : 65);
     const row = makeLead(text, channel, {

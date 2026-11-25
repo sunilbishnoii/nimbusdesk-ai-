@@ -329,7 +329,7 @@ function MessageRow({
           {lead && isApt && (
             <AppointmentSlotPicker
               leadId={lead.id}
-              service={lead.entities?.service || "Carpenter / Specialist"}
+              service={lead.entities?.service || "General Consultation"}
               onBooked={onBooked}
               existingAppointment={lead.appointment}
             />
