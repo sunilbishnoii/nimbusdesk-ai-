@@ -20,12 +20,14 @@ class Pipeline:
         self.intent_clf = IntentClassifier()
         self.llm = get_llm()
 
-    def process(self, text, channel="web", name=None, email=None, persist=True):
+    def process(self, text, channel="web", name=None, email=None, phone=None, company=None, lead_id=None, persist=True):
         t0 = time.perf_counter()
         intent, iconf = self.intent_clf.predict(text)
         ent = extract_entities(text)
         if name: ent.setdefault("name", name)
         if email: ent.setdefault("email", email)
+        if phone: ent.setdefault("phone", phone)
+        if company: ent.setdefault("company", company)
         small = small_talk_kind(text)
         if small or intent == "complaint":      # nothing to look up: greetings, thanks, complaints get a direct reply
             rag = {"answer": "", "grounding_confidence": 0.0, "refused": False, "sources": []}

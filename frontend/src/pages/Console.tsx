@@ -78,6 +78,16 @@ export default function Console({ onSaved }: { onSaved: () => void }) {
   const [activeToast, setActiveToast] = useState<{ id: number; name?: string | null; tier: any; estimated_revenue?: number } | null>(null);
   const [showConfetti, setShowConfetti] = useState(false);
 
+  // Multi-Turn NLP Context Memory
+  const [sessionEntities, setSessionEntities] = useState<{
+    name?: string | null;
+    email?: string | null;
+    phone?: string | null;
+    company?: string | null;
+    service?: string | null;
+  }>({});
+  const [sessionLeadId, setSessionLeadId] = useState<number | null>(null);
+
   const endRef = useRef<HTMLDivElement>(null);
   const textareaRef = useRef<HTMLTextAreaElement>(null);
 
@@ -133,7 +143,29 @@ export default function Console({ onSaved }: { onSaved: () => void }) {
     setLoading(true);
 
     try {
-      const lead = await api.submitEnquiry({ text: msg, channel });
+      // Pass conversational memory context so the bot never forgets the lead
+      const lead = await api.submitEnquiry({
+        text: msg,
+        channel,
+        name: sessionEntities.name,
+        email: sessionEntities.email,
+        phone: sessionEntities.phone,
+        company: sessionEntities.company,
+        lead_id: sessionLeadId,
+      });
+
+      // Update multi-turn session memory
+      if (lead.id) setSessionLeadId(lead.id);
+      setSessionEntities((prev) => ({
+        ...prev,
+        ...lead.entities,
+        name: lead.name || lead.entities?.name || prev.name,
+        email: lead.email || lead.entities?.email || prev.email,
+        phone: lead.phone || lead.entities?.phone || prev.phone,
+        company: lead.company || lead.entities?.company || prev.company,
+        service: lead.entities?.service || prev.service,
+      }));
+
       // Show slot picker ONLY when user explicitly requests an appointment/booking/demo
       const isApt = /\b(appoint[a-z]*|book\s+a[n]?\s+(appoint|slot|demo|meeting)|schedule\s+a[n]?\s+(appoint|demo|meeting|call)|set\s+up\s+a\s+(call|meeting)|carpenter|plumber|electrician|book\s+me\s+in|10[\s-]?min(?:ute)?\s+breif?(?:ing)?|brief(?:ing)?)\b/i.test(msg);
 
@@ -253,6 +285,13 @@ export default function Console({ onSaved }: { onSaved: () => void }) {
               </button>
             ))}
           </div>
+
+          {Boolean(sessionEntities.name || sessionEntities.company || sessionEntities.email || sessionEntities.phone) && (
+            <div style={{ display: "flex", alignItems: "center", gap: 8, padding: "6px 14px", background: "rgba(99, 102, 241, 0.08)", border: "1px solid rgba(99, 102, 241, 0.2)", borderRadius: 10, fontSize: 12, color: "var(--primary)", marginBottom: 10, width: "fit-content" }}>
+              <Sparkles size={13} />
+              <span><b>NLP Session Memory:</b> {[sessionEntities.name && `Name: ${sessionEntities.name}`, sessionEntities.company && `Company: ${sessionEntities.company}`, sessionEntities.email && `Email: ${sessionEntities.email}`, sessionEntities.phone && `Phone: ${sessionEntities.phone}`].filter(Boolean).join(" · ")}</span>
+            </div>
+          )}
 
           <div className="chat-input-box">
             <select

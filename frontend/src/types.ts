@@ -13,6 +13,9 @@ export interface EnquiryRequest {
   channel?: string;
   name?: string | null;
   email?: string | null;
+  phone?: string | null;
+  company?: string | null;
+  lead_id?: number | null;
 }
 
 export interface Source {
@@ -79,6 +82,21 @@ export interface Lead {
   appointment?: Appointment;
 }
 
+export interface ContactStats {
+  emails_captured: number;
+  email_rate: number;
+  phones_captured: number;
+  phone_rate: number;
+  names_captured: number;
+  name_rate: number;
+  companies_captured: number;
+  company_rate: number;
+  budgets_captured: number;
+  budget_rate: number;
+  fully_qualified_leads: number;
+  full_qualification_rate: number;
+}
+
 export interface Analytics {
   total: number;
   avg_grounding: number | null;
@@ -89,4 +107,5 @@ export interface Analytics {
   by_intent: Record<string, number>;
   total_revenue?: number;
   appointments_count?: number;
+  contact_stats?: ContactStats;
 }

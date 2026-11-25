@@ -63,7 +63,44 @@ def analytics():
     with conn() as c:
         r = lambda q: c.execute(q).fetchall()
         tot = r("SELECT COUNT(*) n, AVG(grounding) g, AVG(refused) rf, AVG(latency_ms) l, AVG(needs_human) h FROM enquiries")[0]
-        return {"total": tot["n"], "avg_grounding": tot["g"], "refusal_rate": tot["rf"], "avg_latency_ms": tot["l"],
-                "human_escalation_rate": tot["h"],
-                "by_tier": {x["tier"]: x["n"] for x in r("SELECT tier, COUNT(*) n FROM enquiries GROUP BY tier")},
-                "by_intent": {x["intent"]: x["n"] for x in r("SELECT intent, COUNT(*) n FROM enquiries GROUP BY intent")}}
+        n = tot["n"] or 1
+        contacts = r("""
+            SELECT 
+                COUNT(CASE WHEN email IS NOT NULL AND TRIM(email) != '' THEN 1 END) as emails,
+                COUNT(CASE WHEN phone IS NOT NULL AND TRIM(phone) != '' THEN 1 END) as phones,
+                COUNT(CASE WHEN name IS NOT NULL AND TRIM(name) != '' THEN 1 END) as names,
+                COUNT(CASE WHEN company IS NOT NULL AND TRIM(company) != '' THEN 1 END) as companies
+            FROM enquiries
+        """)[0]
+        rows = c.execute("SELECT entities, email, phone, name, company FROM enquiries").fetchall()
+        budgets = sum(1 for row in rows if '"budget"' in (row["entities"] or ""))
+        full_qual = sum(1 for row in rows if (row["email"] and (row["phone"] or row["name"] or row["company"])))
+
+        emails_c = contacts["emails"]
+        phones_c = contacts["phones"]
+        names_c = contacts["names"]
+        companies_c = contacts["companies"]
+
+        return {
+            "total": tot["n"],
+            "avg_grounding": tot["g"],
+            "refusal_rate": tot["rf"],
+            "avg_latency_ms": tot["l"],
+            "human_escalation_rate": tot["h"],
+            "by_tier": {x["tier"]: x["n"] for x in r("SELECT tier, COUNT(*) n FROM enquiries GROUP BY tier")},
+            "by_intent": {x["intent"]: x["n"] for x in r("SELECT intent, COUNT(*) n FROM enquiries GROUP BY intent")},
+            "contact_stats": {
+                "emails_captured": emails_c,
+                "email_rate": round(emails_c / n, 2),
+                "phones_captured": phones_c,
+                "phone_rate": round(phones_c / n, 2),
+                "names_captured": names_c,
+                "name_rate": round(names_c / n, 2),
+                "companies_captured": companies_c,
+                "company_rate": round(companies_c / n, 2),
+                "budgets_captured": budgets,
+                "budget_rate": round(budgets / n, 2),
+                "fully_qualified_leads": full_qual,
+                "full_qualification_rate": round(full_qual / n, 2),
+            }
+        }

@@ -57,6 +57,9 @@ class Enquiry(BaseModel):
     channel: str = "web"
     name: str | None = None
     email: str | None = None
+    phone: str | None = None
+    company: str | None = None
+    lead_id: int | None = None
 
 
 class Status(BaseModel):
@@ -71,7 +74,7 @@ def health():
 
 @app.post("/enquiry")
 def enquiry(e: Enquiry):
-    return state["p"].process(e.text, e.channel, e.name, e.email)
+    return state["p"].process(e.text, e.channel, e.name, e.email, e.phone, e.company, e.lead_id)
 
 
 @app.get("/leads")

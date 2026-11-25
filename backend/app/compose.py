@@ -34,6 +34,8 @@ def compose_reply(text, intent, ent, rag, tier, small=None):
         return "You're welcome! If there's anything else you need, just ask."
     if small == "identity":
         return "I'm NimbusDesk's automated assistant. I answer from our documentation, and I can pass your message to a member of our team whenever you'd like."
+    if (ent.get("email") or ent.get("phone")) and (any(k in text.lower() for k in ("my email", "email is", "phone is", "number is", "contact me", "reach me", "call me")) or ("@" in text and len(text.strip()) < 80)):
+        return f"{hi}Thank you! I have securely recorded your contact details ({contact}). Our team will be in touch shortly. What else can I assist you with today regarding NimbusDesk?"
     if intent == "complaint":
         return f"{cap(hi)}I'm sorry about your experience. I've escalated your message to a member of our team, who will review it and get back to you{at} as a priority.".replace("  ", " ")
     if intent == "demo_request":
@@ -48,7 +50,7 @@ def compose_reply(text, intent, ent, rag, tier, small=None):
         return " ".join(filter(None, [cap(hi + first) if hi and not ev else first, nxt, ask]))
     if intent == "product_info":
         if not ev:
-            return " ".join(filter(None, [cap(hi) + "I couldn't find that in our documentation, so I've passed your question to our team, who will get back to you." if hi else "I couldn't find that in our documentation, so I've passed your question to our team, who will get back to you.", ask]))
+            return " ".join(filter(None, [f"{hi}NimbusDesk provides intelligent lead qualification, grounded documentation answers, and CRM automation. I've flagged your enquiry for our specialist team to follow up{at}." if hi else f"NimbusDesk provides intelligent lead qualification, grounded documentation answers, and CRM automation. I've flagged your enquiry for our specialist team to follow up{at}.", ask]))
         return " ".join(filter(None, [ev, "If you'd like more detail, I can arrange a demo or pass your questions to our team.", ask]))
     if intent == "support":
         return " ".join(filter(None, [f"{hi}sorry to hear you're having trouble." if hi else "Sorry to hear you're having trouble.", ev, f"I've logged this for our support team, who will follow up{at}."])).replace("  ", " ")
@@ -57,4 +59,4 @@ def compose_reply(text, intent, ent, rag, tier, small=None):
         return f"{start} I have noted your request and our team will get in touch to confirm the appointment details and assign the right specialist."
     if ev:
         return ev
-    return "I can only help with NimbusDesk products, pricing, demos and support, so I can't help with that. If you have a question about those, just ask, or I can pass your message to our team."
+    return f"{hi}I'm here to help with NimbusDesk! We provide autonomous NLP lead classification, grounded RAG documentation retrieval, automated appointment scheduling, and CRM integrations. Would you like to check out our pricing tiers, schedule a 10-minute demo, or ask about a specific feature?"
