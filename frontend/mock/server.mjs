@@ -137,57 +137,10 @@ function generateResponse(text, channel) {
   const entities = { name, email, phone, company, budget, service };
   const greeting = name ? `Hey ${name}! ` : "Hey there! ";
 
-  // 1. BRIEFING / 10-MINUTE CALL / APPOINTMENT FOLLOW-UP
-  if (/brief|breif|10\s*min|15\s*min|quick\s*call|call\b|sync\b|calendar|consult/i.test(lower)) {
-    const sName = "10-Minute Briefing";
-    const answer = `${greeting}Awesome, let's lock in that 10-minute briefing! 🗓️⚡\n\nI've opened 3 immediate slots on our specialist's calendar below. Tap your preferred time to confirm, or tell me another time that works:`;
-    const score = (email || phone) ? 90 : 80;
-    const row = makeLead(text, channel, {
-      intent: "demo_request", intent_conf: 0.95,
-      entities: { ...entities, urgency_phrase: "10-minute briefing", service: sName },
-      answer, grounding: 0.94, needs_human: true,
-      score, name, email, phone, company,
-      estimated_revenue: 24000,
-    });
-    leads.unshift(row);
-    return row;
-  }
-
-  // 2. EMAIL OVERVIEW / SEND DETAILS
-  if (/(?:email|mail|send|overview|packet|deck|summary)\b/i.test(lower) && !/appoint|meet|book/i.test(lower)) {
-    const emailFound = email || entities.email;
-    const answer = emailFound
-      ? `${greeting}I've dispatched your personalized executive overview packet to **${emailFound}**! 📄✨\n\nWould you also like to schedule a 10-minute live demo to see the models in action?`
-      : `${greeting}You got it! 📄\n\nPlease drop your email address below, and I'll send over the executive summary and technical architecture guide right away!`;
-    const row = makeLead(text, channel, {
-      intent: "product_info", intent_conf: 0.92,
-      entities: { ...entities, urgency_phrase: "overview packet requested" },
-      answer, grounding: 0.91,
-      score: 65, name, email, phone, company,
-      estimated_revenue: 12000,
-    });
-    leads.unshift(row);
-    return row;
-  }
-
-  // 3. AFFIRMATIVE ("yes", "sure", "ok", "sounds good", "option 1")
-  if (/^(yes|sure|yeah|yep|ok|okay|definitely|let's do it|sounds good|first option|option 1|please do)\b/i.test(lower)) {
-    const answer = `${greeting}Fantastic, let's get you on the schedule! 🚀\n\nPick one of our open availability slots below, or let me know your preferred day and time:`;
-    const row = makeLead(text, channel, {
-      intent: "demo_request", intent_conf: 0.93,
-      entities: { ...entities, urgency_phrase: "agreed to schedule meeting", service: "10-Minute Briefing" },
-      answer, grounding: 0.92, needs_human: true,
-      score: 82, name, email, phone, company,
-      estimated_revenue: 24000,
-    });
-    leads.unshift(row);
-    return row;
-  }
-
-  // 4. APPOINTMENT / BOOKING / SERVICE REQUEST (e.g. carpenter, specialist)
-  if (/appoint[a-z]*|schedule|book|booking|meet|meeting|carpenter|plumber|electrician/i.test(lower)) {
-    const sName = service || (/carpenter/i.test(lower) ? "Carpenter Service" : "Specialist Consultation");
-    const answer = `${greeting}I've set up an appointment slot for your **${sName}** right away! ⚡\n\nI found 3 immediate openings for you:\n\n👉 Pick a preferred slot below to instantly confirm, or let me know a custom time!`;
+  // ── EXPLICIT APPOINTMENT / BOOKING (must say appoint/book/schedule clearly) ──
+  if (/\b(appoint[a-z]*|book\s+a[n]?\s+appoint|book\s+a\s+slot|book\s+a\s+demo|schedule\s+a[n]?\s+appoint|book\s+me\s+in|carpenter|plumber|electrician|handyman|service\s+visit)\b/i.test(lower)) {
+    const sName = service || (/carpenter/i.test(lower) ? "Carpenter Service" : /plumber/i.test(lower) ? "Plumber Service" : /electrician/i.test(lower) ? "Electrician Service" : "Specialist Consultation");
+    const answer = `${greeting}I've found available slots for your **${sName}** request! 📅\n\nHere are 3 available time slots — tap to confirm:\n\n👉 Pick a preferred slot below to instantly confirm, or tell me a time that works better for you!`;
     const score = (email || phone) ? 88 : (name ? 75 : 65);
     const row = makeLead(text, channel, {
       intent: "demo_request", intent_conf: 0.94,
@@ -200,10 +153,42 @@ function generateResponse(text, channel) {
     return row;
   }
 
-  // 2. DEMO / PRICING / ENTERPRISE
-  if (/demo|buy|contract|quote|purchase|upgrade|pricing|price|cost|tier/i.test(lower)) {
-    const answer = `${greeting}Excited to have you exploring NimbusDesk! 🚀\n\nHere's our intelligent tier lineup:\n\n• **Starter**: $29/mo (Up to 5 agents, Core NLP intent routing)\n• **Growth**: $89/mo (Up to 25 agents, Hybrid RAG + Lead Scoring)\n• **Enterprise**: Custom (Unlimited agents, SOC-2, Custom fine-tuned SLMs)\n\nWant to schedule a live product walk-through or get a tailored quote for your team?`;
-    const score = (email || phone) ? 92 : (name ? 82 : 74);
+  // ── EXPLICIT DEMO / MEETING REQUEST ──
+  if (/\b(book\s+a\s+demo|schedule\s+a\s+demo|set\s+up\s+a\s+(call|meeting)|book\s+a\s+meeting|want\s+a\s+demo|request\s+a\s+demo|live\s+demo)\b/i.test(lower)) {
+    const sName = "Live Product Demo";
+    const answer = `${greeting}Awesome, let's lock in your live demo! 🗓️⚡\n\nI've opened 3 slots on our product specialist's calendar. Tap your preferred time to confirm:`;
+    const score = (email || phone) ? 90 : 80;
+    const row = makeLead(text, channel, {
+      intent: "demo_request", intent_conf: 0.95,
+      entities: { ...entities, urgency_phrase: "live demo request", service: sName },
+      answer, grounding: 0.94, needs_human: true,
+      score, name, email, phone, company,
+      estimated_revenue: 24000,
+    });
+    leads.unshift(row);
+    return row;
+  }
+
+  // ── BRIEFING / 10-MINUTE CALL (only when user says "brief/briefing/10 min call" explicitly) ──
+  if (/\b(brief(?:ing)?|10[\s-]?min(?:ute)?(?:\s+brief(?:ing)?|\s+call)?|quick\s+10|schedule\s+a\s+brief|10\s+minute\s+breif)\b/i.test(lower)) {
+    const sName = "10-Minute Briefing";
+    const answer = `${greeting}Awesome, let's lock in that 10-minute briefing! 🗓️⚡\n\nI've opened 3 immediate slots on our specialist's calendar below. Tap your preferred time to confirm:`;
+    const score = (email || phone) ? 90 : 80;
+    const row = makeLead(text, channel, {
+      intent: "demo_request", intent_conf: 0.95,
+      entities: { ...entities, urgency_phrase: "10-minute briefing", service: sName },
+      answer, grounding: 0.94, needs_human: true,
+      score, name, email, phone, company,
+      estimated_revenue: 24000,
+    });
+    leads.unshift(row);
+    return row;
+  }
+
+  // ── PRICING / PLANS / COST ──
+  if (/\b(pricing|price|cost|plan|tier|quote|budget|how\s+much|per\s+month|monthly|annual|enterprise\s+plan|starter|growth)\b/i.test(lower)) {
+    const answer = `${greeting}Great question! Here's a quick overview of **NimbusDesk** plans:\n\n• **Starter** — $29/agent/mo · Up to 5 agents · NLP intent routing\n• **Growth** — $89/agent/mo · Up to 25 agents · Hybrid RAG + Lead Scoring\n• **Enterprise** — Custom pricing · Unlimited agents · SOC-2, SLAs, fine-tuned SLMs\n\nAll plans include a **14-day free trial**. Would you like a custom quote for your team size?`;
+    const score = (email || phone) ? 88 : (name ? 78 : 68);
     const row = makeLead(text, channel, {
       intent: "pricing", intent_conf: 0.96,
       entities, answer, grounding: 0.95,
@@ -215,9 +200,68 @@ function generateResponse(text, channel) {
     return row;
   }
 
-  // 3. COMPLAINTS / ISSUES
-  if (/charged|unhappy|refund|cancel|crash|disappoint|angry|broken|bug|issue|problem/i.test(lower)) {
-    const answer = `${greeting}I hear you, and I sincerely apologize for the friction. 🤍\n\nI have automatically prioritized your ticket as **P1 High Priority** for our senior success leads. A team member is actively reviewing your account log right now.\n\nTicket reference: **#ND-${Math.floor(1000 + Math.random() * 9000)}**`;
+  // ── FEATURES / INTEGRATIONS / HOW IT WORKS ──
+  if (/\b(feature|integrat|salesforce|hubspot|slack|zendesk|api|how\s+does|what\s+(can|does)|support|ticket|inbox|live\s+chat|automation|workflow|rag|nlp|ai\s+reply|knowledge\s+base)\b/i.test(lower)) {
+    const answer = `${greeting}NimbusDesk is packed with intelligent capabilities:\n\n🧠 **NLP Intent Engine** — classifies & routes enquiries automatically\n📚 **Grounded RAG** — answers from your verified knowledge base, zero hallucinations\n🎫 **Smart Ticketing** — auto-priority, escalation, SLA tracking\n📊 **Lead Scoring** — real-time Hot/Warm/Cold tiers with explainable AI\n🔗 **Integrations** — Salesforce, HubSpot, Slack, Zendesk, Intercom, and more via REST API\n\nWant a deeper dive into any specific feature?`;
+    const score = (email || phone) ? 72 : (name ? 60 : 50);
+    const row = makeLead(text, channel, {
+      intent: "product_info", intent_conf: 0.93,
+      entities, answer, grounding: 0.92,
+      sources: [{ n: 1, source: "features.md", heading: "Platform capabilities" }],
+      score, name, email, phone, company,
+      estimated_revenue: calculateEstimatedRevenue(score, entities),
+    });
+    leads.unshift(row);
+    return row;
+  }
+
+  // ── FREE TRIAL / SIGN UP / GET STARTED ──
+  if (/\b(free\s+trial|trial|sign\s+up|get\s+start|onboard|register|create\s+account|try\s+it|demo\s+account)\b/i.test(lower)) {
+    const answer = `${greeting}You can start your **14-day free trial** in under 2 minutes — no credit card required! 🎉\n\n1. Visit **app.nimbusdesk.io/signup**\n2. Add your team agents\n3. Connect your inbox or ticketing system\n4. Let the NLP engine start qualifying leads automatically\n\nWant me to schedule a quick onboarding call to get you set up faster?`;
+    const score = (email || phone) ? 85 : (name ? 70 : 58);
+    const row = makeLead(text, channel, {
+      intent: "pricing", intent_conf: 0.91,
+      entities, answer, grounding: 0.93,
+      score, name, email, phone, company,
+      estimated_revenue: calculateEstimatedRevenue(score, entities),
+    });
+    leads.unshift(row);
+    return row;
+  }
+
+  // ── EMAIL OVERVIEW / SEND DETAILS ──
+  if (/\b(email|mail|send|overview|brochure|packet|deck|summary|whitepaper)\b/i.test(lower) && !/appoint|meet|book/i.test(lower)) {
+    const emailFound = email || entities.email;
+    const answer = emailFound
+      ? `${greeting}I've dispatched a personalized overview packet to **${emailFound}**! 📄✨\n\nIt includes our feature breakdown, pricing tiers, and a case study. Would you like to also schedule a 10-minute live walkthrough?`
+      : `${greeting}Happy to send that over! 📄\n\nPlease share your email address and I'll send the executive summary and technical architecture guide right away.`;
+    const row = makeLead(text, channel, {
+      intent: "product_info", intent_conf: 0.92,
+      entities: { ...entities, urgency_phrase: "overview packet requested" },
+      answer, grounding: 0.91,
+      score: 65, name, email, phone, company,
+      estimated_revenue: 12000,
+    });
+    leads.unshift(row);
+    return row;
+  }
+
+  // ── AFFIRMATIVE follow-up — do NOT auto-schedule; ask what they'd like ──
+  if (/^(yes|sure|yeah|yep|ok|okay|definitely|sounds good|please do|go ahead)\b/i.test(lower)) {
+    const answer = `${greeting}Sure! What would you like to do next? 😊\n\n• 📅 **Book an appointment or demo** — just say "book a demo" or "schedule a call"\n• 💰 **See pricing** — I can walk you through our plans\n• 📄 **Get an overview** — share your email and I'll send one over\n• 🧠 **Ask a question** — about features, integrations, or how NimbusDesk works`;
+    const row = makeLead(text, channel, {
+      intent: "product_info", intent_conf: 0.75,
+      entities, answer, grounding: 0.80,
+      score: 40, name, email, phone, company,
+      estimated_revenue: calculateEstimatedRevenue(40, entities),
+    });
+    leads.unshift(row);
+    return row;
+  }
+
+  // ── COMPLAINTS / ISSUES ──
+  if (/\b(charged|unhappy|refund|cancel|crash|disappoint|angry|broken|bug|issue|problem|not\s+working|failed|error)\b/i.test(lower)) {
+    const answer = `${greeting}I sincerely apologize for the trouble — that should not have happened. 🤍\n\nYour ticket has been flagged as **P1 High Priority** and assigned to our senior success team. A specialist will follow up with you within 1 hour.\n\nTicket reference: **#ND-${Math.floor(1000 + Math.random() * 9000)}**`;
     const row = makeLead(text, channel, {
       intent: "complaint", intent_conf: 0.95,
       entities, answer, grounding: 0.85, needs_human: true,
@@ -227,9 +271,9 @@ function generateResponse(text, channel) {
     return row;
   }
 
-  // 4. GENERAL GREETING / INQUIRY
-  if (/^(hi|hello|hey|yo|namaste|sup|good)/i.test(lower) && lower.length < 35) {
-    const answer = `${greeting}Welcome to **NimbusDesk** · The next-gen NLP & RAG Lead Automation Engine. ✨\n\nHow can I accelerate your day?\n\n• 📅 Book an expert service or appointment\n• ⚡ Get real-time pricing and plan recommendations\n• 🧠 Ask technical questions about our RAG architecture`;
+  // ── GREETING ──
+  if (/^(hi|hello|hey|yo|namaste|sup|good\s+(morning|afternoon|evening))/i.test(lower) && lower.length < 40) {
+    const answer = `${greeting}Welcome to **NimbusDesk** — the AI-powered Lead Intelligence Platform! ✨\n\nI can help you with:\n\n• 💬 Answering questions about features, pricing, and integrations\n• 📅 Booking a demo or service appointment\n• 🎫 Raising a support ticket\n• 🧠 Explaining how our NLP & RAG engine works\n\nWhat can I help you with today?`;
     const row = makeLead(text, channel, {
       intent: "product_info", intent_conf: 0.82,
       entities, answer, grounding: 0.90,
@@ -239,11 +283,11 @@ function generateResponse(text, channel) {
     return row;
   }
 
-  // 5. DEFAULT FALLBACK
-  const answer = `${greeting}Thanks for reaching out! 🙏\n\nI've analyzed your enquiry through our semantic classifier and mapped it to our knowledge base. Would you like to schedule a quick 10-minute briefing or have me email you a personalized overview?`;
-  const score = (email || company) ? 65 : 45;
+  // ── DEFAULT FALLBACK ──
+  const answer = `${greeting}Thanks for reaching out! 🙏\n\nI'm NimbusDesk's AI assistant — I can answer questions about our platform, features, pricing, integrations, or help you book a demo.\n\nCould you tell me a bit more about what you're looking for so I can point you in the right direction?`;
+  const score = (email || company) ? 60 : 40;
   const row = makeLead(text, channel, {
-    intent: "product_info", intent_conf: 0.78,
+    intent: "product_info", intent_conf: 0.72,
     entities, answer, grounding: 0.75,
     score, name, email, phone, company,
   });

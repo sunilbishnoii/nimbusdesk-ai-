@@ -57,7 +57,7 @@ function getFormattedDate() {
 }
 
 const QUICK_PROMPTS = [
-  { text: "hi i am sunil and i wanted appointemnt w carpenter", label: "🔨 Book Carpenter Appointment" },
+  { text: "Hi, I'm Rahul from TechCorp. We have 20 agents and need a CRM automation solution.", label: "👋 New Lead Intro" },
   { text: "Hi, I'm Priya Nair from Zenith. We have 25 agents, budget $2000/mo and want a demo this week. priya@zenith.in", label: "🔥 Hot Lead ($24k ARR)" },
   { text: "What are your pricing plans for team collaboration?", label: "💰 Pricing & Plans" },
   { text: "Do you integrate with Salesforce and HubSpot?", label: "⚡ Integrations & RAG" },
@@ -134,7 +134,8 @@ export default function Console({ onSaved }: { onSaved: () => void }) {
 
     try {
       const lead = await api.submitEnquiry({ text: msg, channel });
-      const isApt = /appoint|schedule|book|carpenter|demo|consult|brief|breif|slot|call/i.test(msg) || /brief|breif|appoint|slot|calendar/i.test(lead.answer);
+      // Show slot picker ONLY when user explicitly requests an appointment/booking/demo
+      const isApt = /\b(appoint[a-z]*|book\s+a[n]?\s+(appoint|slot|demo|meeting)|schedule\s+a[n]?\s+(appoint|demo|meeting|call)|set\s+up\s+a\s+(call|meeting)|carpenter|plumber|electrician|book\s+me\s+in|10[\s-]?min(?:ute)?\s+breif?(?:ing)?|brief(?:ing)?)\b/i.test(msg);
 
       const botMsg: ChatMsg = {
         id: Date.now() + 1,
@@ -270,7 +271,7 @@ export default function Console({ onSaved }: { onSaved: () => void }) {
               value={input}
               onChange={handleInput}
               onKeyDown={onKeyDown}
-              placeholder="Ask anything or simulate a lead enquiry (e.g. 'hi i am sunil and i wanted appointemnt w carpenter')..."
+              placeholder="Ask about pricing, features, integrations, or type 'book a demo' to schedule..."
               rows={1}
             />
 
@@ -312,7 +313,8 @@ function MessageRow({
   }
 
   const lead = msg.lead;
-  const isApt = msg.isAppointmentRequest || /appoint|book|meet|carpenter|demo|brief|breif|slot|calendar/i.test(msg.text) || Boolean(lead?.entities?.service);
+  // Slot picker only shown when the flag was explicitly set by the send() function
+  const isApt = msg.isAppointmentRequest === true;
 
   return (
     <div className="chat-msg chat-msg-bot">
